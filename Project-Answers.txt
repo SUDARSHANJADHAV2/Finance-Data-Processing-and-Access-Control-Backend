@@ -1,0 +1,36 @@
+Finance Data Processing and Access Control Backend - Assignment Submission
+
+1. GitHub Repository URL
+https://github.com/your-username/finance-dashboard-backend
+(Note: Please create a repository and push this code, then replace the URL above)
+
+2. Live Demo or API Documentation URL
+https://your-api.example.com
+(Note: For local testing, you can use basic Postman collections or point to a local deployment like http://localhost:8080. If you deploy it on Render/Railway, paste that link here. Since H2 console is enabled, you can also access DB at http://localhost:8080/h2-console)
+
+3. Primary Framework or Library Used
+Spring Boot (Java)
+
+4. Features Implemented
+[x] User and Role Management
+[x] Financial Records CRUD
+[x] Record Filtering (by date, category, type) - (Supported by JPA repository filters/queries)
+[x] Dashboard Summary APIs (totals, trends)
+[x] Role Based Access Control
+[x] Input Validation and Error Handling
+[x] Data Persistence (Database)
+
+5. Technical Decisions and Trade-offs
+- Framework Choice: I chose Spring Boot with Java 17. Spring Boot's dependency injection and rich ecosystem (Spring Security, Spring Data JPA) make scaffolding standard CRUD applications and enforcing role-based access control significantly faster and robust.
+- Database: I utilized an H2 in-memory database to keep the execution process extremely simple for evaluators. This eliminates the need to configure a local MySQL or PostgreSQL instance, ensuring zero-configuration deployment for review purposes. 
+- API Design: The REST APIs are structured around clear principles, separating standard record management (`/api/records`) from analytical aggregation (`/api/dashboard`).
+- Access Control: I implemented Spring Security with Basic Authentication instead of JWT for simplicity. This cleanly demonstrates Role-Based Access Control (@EnableMethodSecurity and SecurityFilterChain) mapped to user entries in the persistence layer, which fully addresses the requirements.
+- Error Handling: A @RestControllerAdvice acts as a global exception handler. It formats backend validation errors (from jakarta.validation) into a clean, unified JSON structure instead of raw server stack traces.
+
+6. Additional Notes
+- The application automatically seeds three default users on startup to facilitate easy testing without writing user creation scripts:
+   - Admin user: (Username: admin / Password: admin123) -> Full access
+   - Analyst user: (Username: analyst / Password: analyst123) -> Read APIs and Dashboard APIs
+   - Viewer user: (Username: viewer / Password: viewer123) -> Dashboard APIs only
+- Prerequisites: Java 17 and Maven. To run the app, simply execute `./mvnw spring-boot:run`.
+- The API currently uses standard Basic Auth headers, so ensure your API client (like Postman) has Basic Auth configured with the credentials above for the respective roles.
